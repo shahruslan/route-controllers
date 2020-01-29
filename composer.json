@@ -1,0 +1,27 @@
+{
+  "name": "shahruslan/route-controllers",
+  "description": "Routing for bitrix sites",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ruslan Shikhmagomedov",
+      "email": "shahruslan.m@gmail.com"
+    }
+  ],
+  "version": "1.0.0",
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "slim/slim": "^4.3",
+    "slim/psr7": "^0.6",
+    "spatie/array-to-xml": "^2.10"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5.16"
+  },
+  "autoload": {
+    "psr-4": {
+      "RouteControllers\\": "src"
+    }
+  }
+}

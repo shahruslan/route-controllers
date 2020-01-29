@@ -23,15 +23,21 @@ class RouteController extends BaseRoute
      * RouteController constructor.
      *
      * Example:
-     * new RouteController(['GET'], '/user/list') => \Routing\Controllers\UserController::actionList()
-     * new RouteController(['GET'], '/user/detail/{id:\d+}') => \Routing\Controllers\UserController::actionDetail($id)
+     * new RouteController('GET', '/user/list') => \Routing\Controllers\UserController::actionList()
+     * new RouteController('GET', '/user/detail/{id:\d+}') => \Routing\Controllers\UserController::actionDetail($id)
      * new RouteController(['GET', 'POST'], '/user') => \Routing\Controllers\UserController::actionIndex()
-     * @param array $methods
+     * @param array|string $methods
      * @param string $path
      */
-    public function __construct(array $methods, string $path)
+    public function __construct($method, string $path)
     {
-        $this->methods = $methods;
+        if (is_array($method) == false) {
+            $method = [$method];
+        }
+
+        $method = array_map('strtoupper', $method);
+
+        $this->methods = $method;
         $this->path = $path;
         $this->handler = [$this, 'proxyHandler'];
     }
@@ -61,7 +67,8 @@ class RouteController extends BaseRoute
             throw new ControllerNotFoundException($this->getPath(), 2);
         }
 
-        $controller = ucfirst($controller);
+        $controller = explode('-', $controller);
+        $controller = implode('', array_map('ucfirst', $controller));
         $className = "{$this->namespace}\\{$controller}Controller";
 
         if (class_exists($className) == false || is_subclass_of($className, "\\RouteControllers\\Controllers\\BaseController") == false) {

@@ -4,22 +4,28 @@
 namespace RouteControllers\Routes;
 
 
-class SimpleRouter extends BaseRoute
+class SimpleRoute extends BaseRoute
 {
     /**
      * SimpleRoute constructor.
      *
      * Example:
-     * new SimpleRoute(['GET'], '/hello-world', ['Class', 'Method'])
+     * new SimpleRoute('GET', '/hello-world', ['Class', 'Method'])
      * or
      * new SimpleRoute(['GET', 'POST'], '/hello-world', function (){ return 'hello world'; })
      *
-     * @param array $method
+     * @param array|string $method
      * @param string $path
      * @param callable $handler
      */
-    public function __construct(array $method, string $path, callable $handler)
+    public function __construct($method, string $path, callable $handler)
     {
+        if (is_array($method) == false) {
+            $method = [$method];
+        }
+
+        $method = array_map('strtoupper', $method);
+
         $this->methods = $method;
         $this->path = $path;
         $this->handler = $handler;

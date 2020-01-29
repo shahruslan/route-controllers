@@ -43,7 +43,13 @@ class App
             $controllersNamespace = $this->controllersNamespace;
 
             $handler = function (ServerRequestInterface $request, ResponseInterface $response, array $args) use ($route, $controllersNamespace) {
-                return call_user_func_array($route->getHandler(), [$args, $request, $response, $controllersNamespace]);
+                $data = call_user_func_array($route->getHandler(), [$args, $request, $response, $controllersNamespace]);
+
+                if (($data instanceof ResponseInterface) == false) {
+                    $response->getBody()->write($data);
+                }
+
+                return $response;
             };
 
             $app->map($methods, $path, $handler);

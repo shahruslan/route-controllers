@@ -35,6 +35,7 @@ class App
     {
         $app = AppFactory::create();
         $app->setBasePath($this->basePath);
+        $app->addErrorMiddleware(false, false, false);
 
         foreach ($this->routes as $route) {
 

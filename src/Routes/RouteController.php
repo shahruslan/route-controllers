@@ -58,6 +58,9 @@ class RouteController extends BaseRoute
 
         list($controller, $action) = $parts;
 
+        $controller = explode('-', $controller);
+        $controller = implode('', array_map('ucfirst', $controller));
+
         $action = $action ?: 'Index';
         $action = explode('-', $action);
         $action = implode('', array_map('ucfirst', $action));
@@ -67,8 +70,6 @@ class RouteController extends BaseRoute
             throw new ControllerNotFoundException($this->getPath(), 2);
         }
 
-        $controller = explode('-', $controller);
-        $controller = implode('', array_map('ucfirst', $controller));
         $className = "{$this->namespace}\\{$controller}Controller";
 
         if (class_exists($className) == false || is_subclass_of($className, "\\RouteControllers\\Controllers\\BaseController") == false) {

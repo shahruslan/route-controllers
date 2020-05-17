@@ -39,7 +39,7 @@ class SimpleRoute extends BaseRoute
      *
      * @param string $path
      * @param callable $handler
-     * @return SimpleRouter
+     * @return SimpleRoute
      */
     public static function get(string $path, callable $handler)
     {
@@ -54,7 +54,7 @@ class SimpleRoute extends BaseRoute
      *
      * @param string $path
      * @param callable $handler
-     * @return SimpleRouter
+     * @return SimpleRoute
      */
     public static function post(string $path, callable $handler)
     {

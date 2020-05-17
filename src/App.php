@@ -47,7 +47,9 @@ class App
                 $data = call_user_func_array($route->getHandler(), [$args, $request, $response, $controllersNamespace]);
 
                 if (($data instanceof ResponseInterface) == false) {
-                    $response->getBody()->write($data);
+                    $response = $response->getBody()->write($data);
+                } else {
+                    $response = $data;
                 }
 
                 return $response;
